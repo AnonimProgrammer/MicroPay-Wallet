@@ -1,4 +1,4 @@
-package com.docker.mswallet.model;
+package com.docker.mswallet.model.transaction;
 
 import java.util.UUID;
 
