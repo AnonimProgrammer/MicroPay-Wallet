@@ -1,6 +1,6 @@
 package com.docker.mswallet.repo;
 
-import com.docker.mswallet.entity.Wallet;
+import com.docker.mswallet.model.entity.Wallet;
 import com.docker.mswallet.model.WalletStatus;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;

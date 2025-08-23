@@ -1,6 +1,6 @@
 package com.docker.mswallet.util;
 
-import com.docker.mswallet.entity.Wallet;
+import com.docker.mswallet.model.entity.Wallet;
 import com.docker.mswallet.model.WalletModel;
 import org.mapstruct.Mapper;
 
