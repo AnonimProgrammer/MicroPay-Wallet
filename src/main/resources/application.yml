@@ -1,6 +1,6 @@
 spring:
   application:
-    name: ms-wallet
+    name: micropay-wallet
 
   datasource:
     url: jdbc:postgresql://localhost:5450/wallet_db
