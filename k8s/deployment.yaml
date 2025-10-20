@@ -33,6 +33,16 @@ spec:
                 secretKeyRef:
                   name: db-secret
                   key: SPRING_DATASOURCE_USER
+            - name: RABBIT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: rabbit-secret
+                  key: username
+            - name: RABBIT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rabbit-secret
+                  key: password
           readinessProbe:
             httpGet:
               path: /actuator/health
