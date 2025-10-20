@@ -3,3 +3,7 @@ databaseChangeLog:
       file: db/changelog/001-create-wallet.yaml
   - include:
       file: db/changelog/002-create-reservation.yaml
+  - include:
+      file: db/changelog/003-create-base-event.yaml
+  - include:
+      file: db/changelog/004-create-inbox.yaml

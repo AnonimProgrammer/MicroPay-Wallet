@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wallet-service
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wallet-service
+  template:
+    metadata:
+      labels:
+        app: wallet-service
+    spec:
+      containers:
+        - name: wallet-service
+          image: docker.io/dockerforomar/micropay-wallet:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8110
+          envFrom:
+            - configMapRef:
+                name: db-config-wallet
+          env:
+            - name: DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: SPRING_DATASOURCE_PASSWORD
+            - name: DATASOURCE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: SPRING_DATASOURCE_USER
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8150
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8150
+            initialDelaySeconds: 30
+            periodSeconds: 10

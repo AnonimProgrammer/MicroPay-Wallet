@@ -1,43 +1,10 @@
 package com.micropay.wallet.dto.credit;
 
-public class WalletCreditFailedEvent {
+import java.util.UUID;
 
-    private Long paymentId;
-    private Long walletId;
-    private String failureReason;
-
-    public WalletCreditFailedEvent() {}
-    public WalletCreditFailedEvent(Long paymentId, Long walletId, String failureReason) {
-        this.paymentId = paymentId;
-        this.walletId = walletId;
-        this.failureReason = failureReason;
-    }
-
-    public Long getPaymentId() {
-        return paymentId;
-    }
-    public void setPaymentId(Long paymentId) {
-        this.paymentId = paymentId;
-    }
-    public Long getWalletId() {
-        return walletId;
-    }
-    public void setWalletId(Long walletId) {
-        this.walletId = walletId;
-    }
-    public String getFailureReason() {
-        return failureReason;
-    }
-    public void setFailureReason(String failureReason) {
-        this.failureReason = failureReason;
-    }
-
-    @Override
-    public String toString() {
-        return "WalletCreditFailedEvent {" +
-                "paymentId = " + paymentId +
-                ", walletId = " + walletId +
-                ", failureReason = '" + failureReason + '\'' +
-                '}';
-    }
-}
+public record WalletCreditFailedEvent(
+        UUID eventId,
+        Long paymentId,
+        Long walletId,
+        String failureReason
+) {}

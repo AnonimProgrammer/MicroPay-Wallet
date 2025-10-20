@@ -1,7 +1,10 @@
 package com.micropay.wallet.exception;
 
+import lombok.Getter;
+
 import java.math.BigDecimal;
 
+@Getter
 public class InsufficientBalanceException extends WalletException {
 
     private BigDecimal availableBalance;
@@ -13,18 +16,8 @@ public class InsufficientBalanceException extends WalletException {
         this.requestedAmount = requestedAmount;
     }
 
-    public BigDecimal getAvailableBalance() {
-        return availableBalance;
-    }
-    public BigDecimal getRequestedAmount() {
-        return requestedAmount;
-    }
-
     public InsufficientBalanceException(String message) {
         super(message);
     }
 
-    public InsufficientBalanceException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

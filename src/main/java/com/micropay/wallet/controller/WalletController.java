@@ -1,60 +1,35 @@
 package com.micropay.wallet.controller;
 
-import com.micropay.wallet.model.WalletModel;
-import com.micropay.wallet.model.WalletStatus;
-import com.micropay.wallet.service.WalletDataAccessService;
+import com.micropay.wallet.dto.response.WalletResponse;
+import com.micropay.wallet.service.wallet.WalletManagementService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.UUID;
 
 @RestController
-@RequestMapping("/wallets")
+@RequestMapping("/v1/wallets")
 public class WalletController {
 
-    private final WalletDataAccessService walletService;
+    private final WalletManagementService walletService;
 
-    public WalletController(WalletDataAccessService walletService) {
+    public WalletController(WalletManagementService walletService) {
         this.walletService = walletService;
     }
 
     @PostMapping
-    public ResponseEntity<WalletModel> createWallet(
-            @RequestHeader("X-User-Id") Long userId
+    public ResponseEntity<WalletResponse> createWallet(
+            @RequestHeader("X-User-Id") UUID userId
     ) {
-        WalletModel createdWallet = walletService.createWallet(userId);
+        WalletResponse createdWallet = walletService.createWallet(userId);
         return ResponseEntity.status(201).body(createdWallet);
     }
 
-    @GetMapping("/user")
-    public ResponseEntity<List<WalletModel>> getWalletsByUserId(
-            @RequestHeader("X-User-Id") Long userId
+    @GetMapping()
+    public ResponseEntity<WalletResponse> getWalletById(
+            @RequestHeader("X-User-Id") UUID userId
     ) {
-        List<WalletModel> wallets = walletService.getWalletsByUserId(userId);
-        return ResponseEntity.ok(wallets);
-    }
-
-    @PatchMapping("/deactivate/{id}")
-    public ResponseEntity<Void> deactivateWallet(@PathVariable Long id) {
-        walletService.updateWalletStatus(id, WalletStatus.DEACTIVATED);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PatchMapping("/activate/{id}")
-    public ResponseEntity<Void> activateWallet(@PathVariable Long id) {
-        walletService.updateWalletStatus(id, WalletStatus.ACTIVE);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PatchMapping("/close/{id}")
-    public ResponseEntity<Void> closeWallet(@PathVariable Long id) {
-        walletService.updateWalletStatus(id, WalletStatus.CLOSED);
-        return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<WalletModel> getWalletById(@PathVariable Long id) {
-        return ResponseEntity.ok(walletService.getWalletById(id));
+        return ResponseEntity.ok(walletService.getWalletByUserId(userId));
     }
 
 }

@@ -15,9 +15,10 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: user_id
-                  type: BIGINT
+                  type: UUID
                   constraints:
                     nullable: false
+                    unique: true
               - column:
                   name: total_balance
                   type: DECIMAL(19,2)

@@ -2,12 +2,16 @@ package com.micropay.wallet.model.entity;
 
 import com.micropay.wallet.model.ReservationStatus;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Data
 @Entity
 @Table(name = "reservations")
+@NoArgsConstructor
 public class Reservation {
 
     @Id
@@ -33,43 +37,11 @@ public class Reservation {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    public Reservation() {}
-    public Reservation(Builder builder) {
-        this.paymentId = builder.paymentId;
-        this.walletId = builder.walletId;
-        this.amount = builder.amount;
-    }
-
-    public static class Builder {
-        private Long paymentId;
-        private Long walletId;
-        private BigDecimal amount;
-
-        public Builder setPaymentId(Long paymentId) {
-            this.paymentId = paymentId;
-            return this;
-        }
-
-        public Builder setWalletId(Long walletId) {
-            this.walletId = walletId;
-            return this;
-        }
-
-        public Builder setAmount(BigDecimal amount) {
-            this.amount = amount;
-            return this;
-        }
-
-        public Reservation build() {
-            return new Reservation(this);
-        }
-    }
-
     @PrePersist
     public void prePersist() {
         this.status = ReservationStatus.RESERVED;
         this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
+        this.updatedAt = createdAt;
     }
 
     @PreUpdate
@@ -77,59 +49,4 @@ public class Reservation {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getPaymentId() {
-        return paymentId;
-    }
-
-    public void setPaymentId(Long paymentId) {
-        this.paymentId = paymentId;
-    }
-
-    public Long getWalletId() {
-        return walletId;
-    }
-
-    public void setWalletId(Long walletId) {
-        this.walletId = walletId;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public ReservationStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(ReservationStatus status) {
-        this.status = status;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 }

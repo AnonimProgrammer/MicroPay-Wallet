@@ -2,10 +2,13 @@ package com.micropay.wallet.model.entity;
 
 import com.micropay.wallet.model.WalletStatus;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
+@Data
 @Entity
 @Table(name = "wallets")
 public class Wallet {
@@ -14,8 +17,8 @@ public class Wallet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, updatable = false)
-    private Long userId;
+    @Column(nullable = false, updatable = false, unique = true)
+    private UUID userId;
 
     @Column(nullable = false)
     private BigDecimal totalBalance;
@@ -36,49 +39,6 @@ public class Wallet {
     @Column(nullable = false, updatable = false)
     private LocalDateTime updatedAt;
 
-
-    public Wallet() {}
-    private Wallet(Builder builder) {
-        this.userId = builder.userId;
-        this.totalBalance = builder.totalBalance;
-        this.availableBalance = builder.availableBalance;
-        this.reservedBalance = builder.reservedBalance;
-        this.status = builder.status;
-    }
-
-    public static class Builder {
-        private Long userId;
-        private BigDecimal totalBalance;
-        private BigDecimal availableBalance;
-        private BigDecimal reservedBalance;
-        private WalletStatus status;
-
-        public Builder userId(Long userId) {
-            this.userId = userId;
-            return this;
-        }
-        public Builder totalBalance(BigDecimal totalBalance) {
-            this.totalBalance = totalBalance;
-            return this;
-        }
-        public Builder availableBalance(BigDecimal availableBalance) {
-            this.availableBalance = availableBalance;
-            return this;
-        }
-        public Builder reservedBalance(BigDecimal reservedBalance) {
-            this.reservedBalance = reservedBalance;
-            return this;
-        }
-        public Builder status(WalletStatus status) {
-            this.status = status;
-            return this;
-        }
-
-        public Wallet build() {
-            return new Wallet(this);
-        }
-    }
-
     @PrePersist
     public void prePersist() {
         this.totalBalance = BigDecimal.ZERO;
@@ -86,64 +46,12 @@ public class Wallet {
         this.reservedBalance = BigDecimal.ZERO;
         this.status = WalletStatus.ACTIVE;
         this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
+        this.updatedAt = createdAt;
     }
 
     @PreUpdate
     public void preUpdate() {
         this.updatedAt = LocalDateTime.now();
-    }
-
-    // Getters
-    public Long getId() {
-        return id;
-    }
-    public Long getUserId() {
-        return userId;
-    }
-    public BigDecimal getTotalBalance() {
-        return totalBalance;
-    }
-    public BigDecimal getAvailableBalance() {
-        return availableBalance;
-    }
-    public BigDecimal getReservedBalance() {
-        return reservedBalance;
-    }
-    public WalletStatus getStatus() {
-        return status;
-    }
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    // Setters
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-    public void setTotalBalance(BigDecimal totalBalance) {
-        this.totalBalance = totalBalance;
-    }
-    public void setAvailableBalance(BigDecimal availableBalance) {
-        this.availableBalance = availableBalance;
-    }
-    public void setReservedBalance(BigDecimal reservedBalance) {
-        this.reservedBalance = reservedBalance;
-    }
-    public void setStatus(WalletStatus status) {
-        this.status = status;
-    }
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
 }

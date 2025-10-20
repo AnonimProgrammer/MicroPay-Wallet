@@ -1,7 +1,7 @@
 package com.micropay.wallet.exception.handler;
 
-import com.micropay.wallet.dto.internal.ErrorResponse;
-import com.micropay.wallet.dto.internal.ReservationErrorResponse;
+import com.micropay.wallet.dto.response.ErrorResponse;
+import com.micropay.wallet.dto.response.ReservationErrorResponse;
 import com.micropay.wallet.exception.InsufficientBalanceException;
 import com.micropay.wallet.exception.WalletNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -38,10 +38,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneric(Exception ex) {
-
         ErrorResponse body = new ErrorResponse(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                "An unexpected error occurred",
+                "An unexpected error occurred. Please try again later.",
                 LocalDateTime.now()
         );
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
