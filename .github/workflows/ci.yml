@@ -73,10 +73,10 @@ jobs:
 
       - name: Apply Kubernetes manifests
         run: |
-          kubectl apply -f rabbit_secret.yaml
-          kubectl apply -f rabbit_deployment.yaml
-          kubectl apply -f rabbit_service.yaml
-          kubectl apply -f db_config_wallet.yaml
+          kubectl apply -f k8s/rabbit_secret.yaml
+          kubectl apply -f k8s/rabbit_deployment.yaml
+          kubectl apply -f k8s/rabbit_service.yaml
+          kubectl apply -f k8s/db_config_wallet.yaml
           kubectl apply -f k8s/deployment.yaml
           kubectl apply -f k8s/service.yaml
 
