@@ -27,12 +27,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: rabbit-secret
-                  key: username
+                  key: RABBIT_USERNAME
             - name: RABBIT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: rabbit-secret
-                  key: password
+                  key: RABBIT_PASSWORD
           livenessProbe:
             exec:
               command: ["rabbitmq-diagnostics", "status"]

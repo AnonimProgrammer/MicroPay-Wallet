@@ -37,21 +37,21 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: rabbit-secret
-                  key: username
+                  key: RABBIT_USERNAME
             - name: RABBIT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: rabbit-secret
-                  key: password
+                  key: RABBIT_PASSWORD
           readinessProbe:
             httpGet:
               path: /actuator/health
-              port: 8150
+              port: 8110
             initialDelaySeconds: 15
             periodSeconds: 10
           livenessProbe:
             httpGet:
               path: /actuator/health
-              port: 8150
+              port: 8110
             initialDelaySeconds: 30
             periodSeconds: 10
